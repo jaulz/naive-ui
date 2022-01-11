@@ -83,7 +83,7 @@ export const colorPickerPanelProps = {
   modes: {
     type: Array as PropType<ColorPickerMode[]>,
     // no hsva by default since browser doesn't support it
-    default: ['rgb', 'hex', 'hsl']
+    default: () => ['rgb', 'hex', 'hsl']
   },
   to: useAdjustedTo.propTo,
   showAlpha: {
@@ -169,6 +169,7 @@ export default defineComponent({
 
     const valueModeRef = computed(() => getModeFromValue(mergedValueRef.value))
 
+    const { modes } = props
     const displayedModeRef = ref<ColorPickerMode>(
       getModeFromValue(mergedValueRef.value) || 'rgb'
     )
@@ -654,7 +655,7 @@ export default defineComponent({
                       label={this.label}
                     >
                       {{
-                        label: () => renderSlot($slots, 'label')
+                        label: $slots['label'] ? () => renderSlot($slots, 'label') : undefined
                       }}
                     </ColorPickerTrigger>
                   )
