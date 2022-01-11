@@ -169,8 +169,9 @@ export default defineComponent({
 
     const valueModeRef = computed(() => getModeFromValue(mergedValueRef.value))
 
+    const { modes } = props
     const displayedModeRef = ref<ColorPickerMode>(
-      getModeFromValue(mergedValueRef.value) || 'rgb'
+      getModeFromValue(mergedValueRef.value) || modes[0] || 'rgb'
     )
 
     function handleUpdateDisplayedMode (): void {
